@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Text Extraction - Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .frame {
+            border: 2px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+
+        pre {
+            text-align: left;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        label:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OCR Result</h1>
+        <div class="frame image-container">
+            <img src="{{ file_url }}" alt="Uploaded File">
+        </div>
+        <div class="frame">
+            <pre>{{ text }}</pre>
+        </div>
+        <form id="uploadForm" action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+            <label for="fileInput">Upload Another File</label>
+            <input type="file" id="fileInput" name="file" accept="image/*,application/pdf" required>
+        </form>
+        <div class="loading">
+            <p>Processing...</p>
+            <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." width="50">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('fileInput').onchange = function() {
+            document.querySelector('.loading').style.display = 'block';
+            document.getElementById('uploadForm').submit();
+        };
+    </script>
+</body>
+</html>
